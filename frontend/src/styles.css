@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: "Roboto", sans-serif;
+  --brand-color: #6842d0;
+  --bg-light: #faf9ff;
+}
+
+body,
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.text-brand {
+  color: var(--brand-color);
+}
+
+.text-muted {
+  color: rgba(28, 24, 38, 0.6);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #1c1826;
+
+  position: absolute;
+  left: 2rem;
+  top: 1.25rem;
+}
