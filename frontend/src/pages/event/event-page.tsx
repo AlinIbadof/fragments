@@ -1,12 +1,57 @@
-import { Link, useParams } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { fetchCurrentEvent } from "../../utils/event-utils.ts";
 
 function EventPage() {
-  const { eventCode } = useParams({ from: "/event/$eventCode" });
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isActive = true;
+
+    const loadEvent = async (): Promise<void> => {
+      try {
+        const currentEvent = await fetchCurrentEvent();
+
+        if (!isActive) {
+          return;
+        }
+
+        setTitle(currentEvent.title);
+      } catch {
+        if (isActive) {
+          void navigate({
+            to: "/",
+            replace: true,
+          });
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void loadEvent();
+
+    return () => {
+      isActive = false;
+    };
+  }, [navigate]);
+
+  if (isLoading) {
+    return (
+      <main>
+        <h1>Loading event...</h1>
+      </main>
+    );
+  }
 
   return (
     <main>
-      <h1>Event {eventCode}</h1>
-      <p>event code {eventCode}</p>
+      <h1>{title}</h1>
+      <p>Event access is active.</p>
       <Link to="/">Back to home</Link>
     </main>
   );

@@ -69,7 +69,14 @@
   box-shadow: 0 0 0 3px rgba(104, 66, 208, 0.2);
 }
 
-.home-card a {
+.home-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-card a,
+.home-card button {
   text-decoration: none;
   color: white;
   font-weight: 500;
@@ -79,10 +86,19 @@
   text-align: center;
   transition: background-color 0.2s;
   display: block;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
 }
 
-.home-card a:hover {
+.home-card a:hover,
+.home-card button:hover {
   background: #5a36b4;
+}
+
+.home-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .home-right {

@@ -1,0 +1,124 @@
+.room-page {
+  min-height: 100vh;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(104, 66, 208, 0.1),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(28, 24, 38, 0.08),
+      transparent 45%
+    ),
+    var(--bg-light);
+}
+
+.room-title {
+  position: absolute;
+  left: 2rem;
+  top: 1.25rem;
+}
+
+.room-card {
+  width: min(100%, 460px);
+  padding: 2rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(104, 66, 208, 0.16);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 40px rgba(28, 24, 38, 0.08);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.room-card h1 {
+  font-size: 2rem;
+  color: #1c1826;
+}
+
+.room-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(28, 24, 38, 0.55);
+}
+
+.room-status {
+  font-size: 0.98rem;
+  color: rgba(28, 24, 38, 0.72);
+  line-height: 1.5;
+}
+
+.room-status-error {
+  color: #9c2e3f;
+}
+
+.room-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.room-card input {
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(104, 66, 208, 0.3);
+  border-radius: 0.75rem;
+  background: white;
+  font-size: 1rem;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.room-card input:focus {
+  border-color: var(--brand-color);
+  box-shadow: 0 0 0 3px rgba(104, 66, 208, 0.18);
+}
+
+.room-button,
+.room-link {
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  font: inherit;
+  text-align: center;
+  text-decoration: none;
+  background: var(--brand-color);
+  color: white;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    opacity 0.2s;
+}
+
+.room-button:hover,
+.room-link:hover {
+  background: #5a36b4;
+}
+
+.room-button:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  .room-page {
+    padding: 1.25rem;
+  }
+
+  .room-title {
+    position: static;
+    justify-self: start;
+    margin-bottom: 0.75rem;
+  }
+
+  .room-card {
+    padding: 1.5rem;
+  }
+}

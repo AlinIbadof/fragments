@@ -7,8 +7,12 @@ import {
 } from "@tanstack/react-router";
 import EventPage from "../pages/event/event-page.tsx";
 import HomePage from "../pages/home/home-page.tsx";
+import RoomPage from "../pages/room/room-page.tsx";
 import NotFoundPage from "../pages/not-found-page";
-import { eventExistsByCode } from "../utils/event-utils.ts";
+import {
+  fetchCurrentEvent,
+  isRoomCodeFormatValid,
+} from "../utils/event-utils.ts";
 
 function RootLayout() {
   return <Outlet />;
@@ -25,27 +29,31 @@ const homeRoute = createRoute({
   component: HomePage,
 });
 
-const eventRoute = createRoute({
+// room route is used as a middleware route where we enter the pin, then redirect to event page.
+const roomRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/event/$eventCode",
+  path: "/room/$roomCode",
   beforeLoad: async ({ params }) => {
-    const isValidEventCode = /^[A-Z0-9]{8}$/.test(
-      params.eventCode.toUpperCase(),
-    );
-
-    if (!isValidEventCode) {
+    if (!isRoomCodeFormatValid(params.roomCode)) {
       throw notFound();
     }
+  },
+  component: RoomPage,
+});
 
-    const eventExists = await eventExistsByCode(params.eventCode);
-
-    if (!eventExists) {
+const eventRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/event",
+  beforeLoad: async () => {
+    try {
+      await fetchCurrentEvent();
+    } catch {
       throw notFound();
     }
   },
   component: EventPage,
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, eventRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, roomRoute, eventRoute]);
 
 export const router = createRouter({ routeTree });
